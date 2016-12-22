@@ -46,7 +46,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   # gem "spring"
 # gem "spring-commands-rspec"
-
+gem "devise"
 
 end
 
