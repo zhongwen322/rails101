@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
-before_action :authenticate_user! , only: [:new, :create]
+  before_action :authenticate_user! , only: [:new, :create, :edit, :update, :destroy]
+
   def index
     @groups = Group.all
   end
@@ -11,9 +12,14 @@ before_action :authenticate_user! , only: [:new, :create]
     def show
       @group = Group.find(params[:id])
     end
-     def edit
-  @group = Group.find(params[:id])
- end
+
+    def edit
+    @group = Group.find(params[:id])
+
+    if current_user != @group.user
+      redirect_to root_path, alert: "You have no permission."
+    end
+  end
 
     def create
    @group = Group.new(group_params)
@@ -39,6 +45,11 @@ end
 
 def update
   @group = Group.find(params[:id])
+
+  if current_user != @group.user
+    redirect_to root_path, alert: "You have no permission."
+  end
+
   if @group.update(group_params)
     redirect_to groups_path, notice: "Update Success"
   else
@@ -46,13 +57,19 @@ def update
   end
 end
 
+def destroy
+  @group = Group.find(params[:id])
 
-     def destroy
-       @group = Group.find(params[:id])
-       @group.destroy
-       flash[:alert] = "Group deleted"
-       redirect_to groups_path
-     end
+  if current_user != @group.user
+    redirect_to root_path, alert: "You have no permission."
+  end
+
+  @group.destroy
+  redirect_to groups_path, alert: "Group deleted"
+end
+
+
+
 
  private
 
