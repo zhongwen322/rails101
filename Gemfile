@@ -47,7 +47,7 @@ group :development do
   # gem "spring"
   # gem "spring-commands-rspec"
 gem "devise"
-
+gem "will_paginate"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
