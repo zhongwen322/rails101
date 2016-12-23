@@ -14,4 +14,12 @@ has_many :group_relationships
       participated_groups.include?(group)
     end
 
+    def join!(group)
+      participated_groups << group
+    end
+
+    def quit!(group)
+      participated_groups.delete(group)
+    end
+
 end
